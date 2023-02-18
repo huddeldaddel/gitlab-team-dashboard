@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { DashboardConfig } from '../../model/dashboard-config';
 import PageHeader from '../../components/PageHeader'
-import { Outlet, Link } from "react-router-dom";
 
 import './Home.css';
 
@@ -34,12 +34,17 @@ class HomePage extends React.Component<IProps, IState> {
                 Bla bla bla 
 
                 <div className="control">
-                    <Link className="button is-link is-light" to={`/config`}>Get started!</Link>                    
+                    <Link className="button is-link is-primary" to={`/config`}>Get started!</Link>                    
                 </div>
-
-                <div className="control">
-                    <button className="button is-link is-light" disabled={!this.props.config} onClick={this.navigateToDashboard}>Show dashboard</button>
-                </div>
+                { 
+                    !!this.props.config ? 
+                    (
+                        <div className="control">
+                            <Link className="button is-link is-light" to={`/dashboard`}>Show dashboard</Link>
+                        </div>
+                    ) 
+                    : undefined
+                }
             </div>
         );
     }
