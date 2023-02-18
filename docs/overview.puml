@@ -1,0 +1,25 @@
+@startuml "overview"
+
+node webserver [
+    <b>Web Server</b>
+    {url = gitlab-dashboard.thomas-werner.engineer}
+    ----
+    Dashboard website
+]
+
+node client [
+    <b>Browser client</b>
+    ----
+    Browser
+]
+
+node gitlab [
+    <b>GitLab Server</b>
+    ----
+    GitLab
+]
+
+client -- webserver : https / Internet
+client -- gitlab : https / Internet
+
+@enduml
