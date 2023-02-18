@@ -18,12 +18,6 @@ class HomePage extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {};        
-
-        this.navigateToDashboard = this.navigateToDashboard.bind(this);
-    }
-
-    navigateToDashboard() {
-        window.location.href = "/dashboard";
     }
 
     render() {        
