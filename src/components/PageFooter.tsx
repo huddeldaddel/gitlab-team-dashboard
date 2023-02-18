@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './PageFooter.css';
+
 interface IProps { }
 
 interface IState { }
