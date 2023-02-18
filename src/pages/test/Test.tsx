@@ -1,6 +1,7 @@
 import React from 'react';
 import { DashboardConfig } from '../../model/dashboard-config';
 import { Gitlab } from '@gitbeaker/browser'; // All Resources
+import PageHeader from '../../components/page-header'
 
 import './Test.css';
 
@@ -55,6 +56,8 @@ class TestPage extends React.Component<IProps, IState> {
     render() {
         return (
             <div className="TestPage">
+                <PageHeader title="Test" />
+
                 <div className="control">
                     <button className="button is-link is-light" onClick={this.handleGetSpecificProject}>Get specific project</button>
                 </div>

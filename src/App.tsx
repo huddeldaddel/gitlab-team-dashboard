@@ -7,9 +7,6 @@ import { DashboardConfig } from './model/dashboard-config';
 
 import './App.css';
 
-// import { Types } from '@gitbeaker/node';
-// import { Gitlab } from '@gitbeaker/node';
-
 interface IProps {
 }
 
@@ -36,7 +33,7 @@ class App extends React.Component<IProps, IState> {
     }
 
     return (
-      <div className="App">
+      <div className="App">        
         {component}
         <PageFooter />
       </div>
