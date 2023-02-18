@@ -1,9 +1,6 @@
 import React from 'react';
-import { ConfigService } from '../../services/config-service'
 import { DashboardConfig } from '../../model/dashboard-config';
-import { GitLabConfig } from '../../model/gitlab-config';
 import { Gitlab } from '@gitbeaker/browser'; // All Resources
-import { ProjectSchema } from '@gitbeaker/core/dist/types/resources/Projects'
 
 import './Test.css';
 
