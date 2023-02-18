@@ -1,6 +1,7 @@
 import React from 'react';
 
-interface IProps { 
+interface IProps {
+    hideConfig?: boolean; 
     title: string;
 }
 
@@ -14,6 +15,7 @@ class PageHeader extends React.Component<IProps, IState> {
     }
 
     render() {
+        var configLink = <a href="/config" className="button is-light">Configuration</a>;        
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div id="navbarBasicExample" className="navbar-menu">
@@ -24,9 +26,7 @@ class PageHeader extends React.Component<IProps, IState> {
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a className="button is-light">
-                                    Configure
-                                </a>
+                                { !this.props.hideConfig ? configLink : undefined }
                             </div>
                         </div>
                     </div>

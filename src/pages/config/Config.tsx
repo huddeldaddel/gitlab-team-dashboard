@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { ConfigService } from '../../services/config-service'
 import { DashboardConfig } from '../../model/dashboard-config';
 import { GitLabConfig } from '../../model/gitlab-config';
+import PageHeader from '../../components/PageHeader'
 
 import './Config.css';
 
@@ -59,21 +61,21 @@ class ConfigPage extends React.Component<IProps, IState> {
 
     handleReset(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         this.initializeState();
+        event.preventDefault();
     }
 
     handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         var config = new DashboardConfig(new GitLabConfig(this.state.gitLabHost, this.state.gitLabToken));
         new ConfigService().UpdateConfig(config);
+        window.location.href = '/';        
         event.preventDefault();
     }
 
     render() {
         return (
-            <div className="ConfigPage">
-                <div className="container is-max-desktop">
-
-                    <h1 className="is-size-1 has-text-centered">Configuration</h1>
-
+            <div className="Page ConfigPage">
+                <PageHeader title="GitLab Team Dashboard - Configuration" hideConfig={true} />
+                <div className="container is-max-desktop">                    
 
                     <form>
                         <h3 className="title is-4 is-spaced bd-anchor-title">GitLab</h3>                        
@@ -99,7 +101,10 @@ class ConfigPage extends React.Component<IProps, IState> {
                                 <button className="button is-link" onClick={this.handleSubmit}>Submit</button>
                             </div>
                             <div className="control">
-                                <button className="button is-link is-light" onClick={this.handleReset}>Cancel</button>
+                                <button className="button is-link is-light" onClick={this.handleReset}>Reset</button>
+                            </div>
+                            <div className="control">
+                                <a href="/" className="button is-link is-light">Cancel</a>
                             </div>
                         </div>
                     </form>

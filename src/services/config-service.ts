@@ -18,8 +18,7 @@ export class ConfigService {
      */
     public UpdateConfig(config: DashboardConfig) {
         var json = JSON.stringify(config);
-        localStorage.setItem("config", json);     
-        window.location.reload();
+        localStorage.setItem("config", json);             
     }
 
 }
