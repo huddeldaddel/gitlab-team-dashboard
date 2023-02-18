@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface IProps {
     hideConfig?: boolean; 
@@ -15,7 +16,7 @@ class PageHeader extends React.Component<IProps, IState> {
     }
 
     render() {
-        var configLink = <a href="/config" className="button is-light">Configuration</a>;        
+        var configLink = <Link className="button is-link is-light" to={`/config`}>Get started!</Link>
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div id="navbarBasicExample" className="navbar-menu">
@@ -25,7 +26,7 @@ class PageHeader extends React.Component<IProps, IState> {
 
                     <div className="navbar-end">
                         <div className="navbar-item">
-                            <div className="buttons">
+                            <div className="buttons">                                
                                 { !this.props.hideConfig ? configLink : undefined }
                             </div>
                         </div>
