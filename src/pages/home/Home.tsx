@@ -2,6 +2,7 @@ import React from 'react';
 
 import { DashboardConfig } from '../../model/dashboard-config';
 import PageHeader from '../../components/PageHeader'
+import { Outlet, Link } from "react-router-dom";
 
 import './Home.css';
 
@@ -33,7 +34,7 @@ class HomePage extends React.Component<IProps, IState> {
                 Bla bla bla 
 
                 <div className="control">
-                    <a href="/config" className="button is-link is-light">Get started!</a>
+                    <Link className="button is-link is-light" to={`/config`}>Get started!</Link>                    
                 </div>
 
                 <div className="control">
