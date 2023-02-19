@@ -12,6 +12,7 @@ interface IProps {
 
 interface IState {
     gitLabHost: string;
+    gitLabMaxProjectCount: number;
     gitLabToken: string;
 }
 
@@ -22,11 +23,13 @@ class ConfigPage extends React.Component<IProps, IState> {
 
         this.state = {
             gitLabHost: "",
+            gitLabMaxProjectCount: 0,
             gitLabToken: ""
         };
 
         this.initializeState = this.initializeState.bind(this);
         this.handleGitLabHostChange = this.handleGitLabHostChange.bind(this);
+        this.handleGitLabMaxProjectCountChange = this.handleGitLabMaxProjectCountChange.bind(this);
         this.handleGitLabTokenChange = this.handleGitLabTokenChange.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,11 +44,13 @@ class ConfigPage extends React.Component<IProps, IState> {
         if (config) {
             this.setState({
                 gitLabHost: config.gitlab?.host || "",
-                gitLabToken: config.gitlab?.token || ""
+                gitLabMaxProjectCount: (typeof config.gitlab?.maxProjectCount == 'number' ? config.gitlab?.maxProjectCount : 0),
+                gitLabToken: config.gitlab?.token || ""                
             });
         } else {
             this.setState({
                 gitLabHost: "",
+                gitLabMaxProjectCount: 0,
                 gitLabToken: ""
             });
         }
@@ -53,6 +58,10 @@ class ConfigPage extends React.Component<IProps, IState> {
 
     handleGitLabHostChange(e: React.ChangeEvent<HTMLInputElement>) {
         this.setState({ gitLabHost: e.currentTarget.value });
+    }
+
+    handleGitLabMaxProjectCountChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        this.setState({ gitLabMaxProjectCount: parseInt(e.currentTarget.value) });
     }
 
     handleGitLabTokenChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -65,9 +74,10 @@ class ConfigPage extends React.Component<IProps, IState> {
     }
 
     handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        var config = new DashboardConfig(new GitLabConfig(this.state.gitLabHost, this.state.gitLabToken));
+        var maxProjectCount = (0 < this.state.gitLabMaxProjectCount) ? this.state.gitLabMaxProjectCount : undefined;        
+        var config = new DashboardConfig(new GitLabConfig(this.state.gitLabHost, this.state.gitLabToken, maxProjectCount));
         new ConfigService().UpdateConfig(config);
-        window.location.href = '/';        
+        window.location.href = '/';
         event.preventDefault();
     }
 
@@ -75,10 +85,10 @@ class ConfigPage extends React.Component<IProps, IState> {
         return (
             <div className="Page ConfigPage">
                 <PageHeader title="GitLab Team Dashboard - Configuration" hideConfig={true} />
-                <div className="container is-max-desktop">                    
+                <div className="container is-max-desktop">
 
                     <form>
-                        <h3 className="title is-4 is-spaced bd-anchor-title">GitLab</h3>                        
+                        <h3 className="title is-4 is-spaced bd-anchor-title">GitLab</h3>
 
                         <div className="field">
                             <label className="label">GitLab Host</label>
@@ -96,6 +106,22 @@ class ConfigPage extends React.Component<IProps, IState> {
                             </div>
                         </div>
 
+                        <div className="field">
+                            <label className="label">Do you want to restrict the number of projects shown?</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select value={this.state.gitLabMaxProjectCount} onChange={this.handleGitLabMaxProjectCountChange}>
+                                        <option value="0">No. Show all projects.</option>
+                                        <option value="20">Yes. Show 20 projects.</option>
+                                        <option value="40">Yes. Show 40 projects.</option>
+                                        <option value="60">Yes. Show 60 projects.</option>
+                                        <option value="80">Yes. Show 80 projects.</option>
+                                        <option value="100">Yes. Show 100 projects.</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="field is-grouped">
                             <div className="control">
                                 <button className="button is-link" onClick={this.handleSubmit}>Submit</button>
@@ -109,7 +135,7 @@ class ConfigPage extends React.Component<IProps, IState> {
                         </div>
                     </form>
 
-                </div>                
+                </div>
             </div>
         );
     }

@@ -20,7 +20,7 @@ class PageHeader extends React.Component<IProps, IState> {
     render() {
         var configLink = <Link className="button is-link is-light" to={`/config`}>Configuration</Link>
         return (
-            <nav className="navbar" role="navigation" aria-label="main navigation">                
+            <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-menu">
                     <div className="navbar-start">
                         <h3 className="is-size-3 ml-2">
@@ -31,9 +31,10 @@ class PageHeader extends React.Component<IProps, IState> {
                         </h3>
                     </div>
 
-                    <div className="navbar-end">
+                    <div className="navbar-end">                        
                         <div className="navbar-item">
-                            <div className="buttons">
+                            <div className="buttons">                                
+                                <Link className="button is-link is-light" to={`/test`}>Tests</Link>
                                 {!this.props.hideConfig ? configLink : undefined}
                             </div>
                         </div>

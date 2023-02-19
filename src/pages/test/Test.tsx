@@ -18,20 +18,22 @@ class TestPage extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {};
-        this.handleGetSpecificProject = this.handleGetSpecificProject.bind(this);
+        this.handleProjectList = this.handleProjectList.bind(this);
         this.handleGetProjectsOfGroup = this.handleGetProjectsOfGroup.bind(this);
     }
 
-    async handleGetSpecificProject(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {        
+    async handleProjectList(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         try {
             const api = new Gitlab({
                 host: this.props.config.gitlab?.host,
                 token: this.props.config.gitlab?.token,
             });
+            var maxPages = typeof this.props.config.gitlab?.maxProjectCount == 'number'
+                ? this.props.config.gitlab?.maxProjectCount / 20
+                : undefined;
 
-            // const project = await api.Projects.show(43595685);
-            const project = await api.Projects.all();
-            console.log("Received project: " + JSON.stringify(project));            
+            const project = await api.Projects.all({ maxPages: maxPages });
+            console.log("Received project: " + JSON.stringify(project));
         } catch (error) {
             console.error("Failed to load errors: " + error);
         }
@@ -47,7 +49,7 @@ class TestPage extends React.Component<IProps, IState> {
             });
 
             const group = await api.Groups.show(63977505);
-            console.log("Received group: " + JSON.stringify(group));            
+            console.log("Received group: " + JSON.stringify(group));
         } catch (error) {
             console.error("Failed to load errors: " + error);
         }
@@ -59,7 +61,7 @@ class TestPage extends React.Component<IProps, IState> {
                 <PageHeader title="GitLab Team Dashboard - Test" />
 
                 <div className="control">
-                    <button className="button is-link is-light" onClick={this.handleGetSpecificProject}>Get specific project</button>
+                    <button className="button is-link is-light" onClick={this.handleProjectList}>List all projects</button>
                 </div>
 
                 <div className="control">
