@@ -40,7 +40,7 @@ class ConfigPage extends React.Component<IProps, IState> {
     }
 
     initializeState() {
-        var config = new ConfigService().LoadConfig();
+        var config = new ConfigService().loadConfig();
         if (config) {
             this.setState({
                 gitLabHost: config.gitlab?.host || "",
@@ -76,7 +76,7 @@ class ConfigPage extends React.Component<IProps, IState> {
     handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         var maxProjectCount = (0 < this.state.gitLabMaxProjectCount) ? this.state.gitLabMaxProjectCount : undefined;        
         var config = new DashboardConfig(new GitLabConfig(this.state.gitLabHost, this.state.gitLabToken, maxProjectCount));
-        new ConfigService().UpdateConfig(config);
+        new ConfigService().updateConfig(config);
         window.location.href = '/';
         event.preventDefault();
     }
