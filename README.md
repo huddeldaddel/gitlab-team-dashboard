@@ -1,4 +1,4 @@
-[![Azure Static Web Apps CI/CD](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml/badge.svg?branch=main)](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml)
+![image](https://api.codiga.io/project/35798/status/svg) ![image](https://api.codiga.io/project/35798/score/svg) [![Azure Static Web Apps CI/CD](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml/badge.svg?branch=main)](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml)
 
 # GitLab Team Dashboard
 
