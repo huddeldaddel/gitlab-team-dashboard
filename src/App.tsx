@@ -27,7 +27,7 @@ class App extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      config: new ConfigService().LoadConfig()
+      config: new ConfigService().loadConfig()
     };
   }
 
