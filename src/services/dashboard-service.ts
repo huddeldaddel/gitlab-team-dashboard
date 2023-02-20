@@ -29,7 +29,7 @@ export class DashboardService {
 
         const projectList: Project[] = [];
         const projects = await api.Projects.all({ maxPages: maxPages });
-        for (var i = 0; i < projects.length; i++) {
+        for (let i = 0; i < projects.length; i++) {
             const pipelines = await api.Pipelines.all(projects[i].id, { maxPages: 2, order_by: "updated_at", perPage: 1, sort: "desc" });
             const pipeline = (pipelines.length > 0) ? Pipeline.fromPipelineSchema(pipelines[0]) : null;
             projectList.push(new Project(projects[i], pipeline));
