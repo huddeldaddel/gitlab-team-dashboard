@@ -1,31 +1,28 @@
-import React from 'react';
-import { DashboardConfig } from '../../model/dashboard-config';
-import PageHeader from '../../components/PageHeader'
+import React from "react";
+import { DashboardConfig } from "../../model/dashboard-config";
+import PageHeader from "../../components/PageHeader";
 
-import './Dashboard.css';
+import "./Dashboard.css";
 
 interface IProps {
-    config: DashboardConfig | null;
+  config: DashboardConfig | null;
 }
 
-interface IState {
-}
+interface IState {}
 
 class DashboardPage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {};
+  }
 
-    constructor(props: IProps) {
-        super(props);
-        this.state = {};                
-    }    
-
-    render() {        
-        return (
-            <div className="Page TestPage">
-                <PageHeader title="GitLab Team Dashboard" />
-                This is where the magic happens!
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="Page TestPage">
+        <PageHeader title="GitLab Team Dashboard" />
+      </div>
+    );
+  }
 }
 
 export default DashboardPage;
