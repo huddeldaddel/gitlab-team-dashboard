@@ -49,7 +49,7 @@ class DashboardPage extends React.Component<IProps, IState> {
     return (
       <div className="Page GitLabPipelines">
         <PageHeader title="GitLab Team Dashboard - Build Pipelines" />
-        <GlCiBoard projects={this.state.gitLabProjects} tileCount={20} />
+        <GlCiBoard projects={this.state.gitLabProjects} tileCount={15} />
       </div>
     );
   }
