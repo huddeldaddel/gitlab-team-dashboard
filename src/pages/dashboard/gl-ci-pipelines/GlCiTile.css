@@ -1,0 +1,61 @@
+div.GitLabCiTile {
+  aspect-ratio: 1 / 1;
+  background-color: #475157;
+  border-radius: 6px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.02);
+  color: #dadcdd;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: calc((100% - 4em) / 3);
+  opacity: 0.9;
+  padding: 1.25rem;
+}
+
+div.GitLabCiTile.success {
+  background-color: #2f9c60;
+}
+
+div.GitLabCiTile.failure {
+  background-color: #e04a4a;
+}
+
+div.GitLabCiTile div.tile-main {
+  align-content: center;
+  display: grid;
+  height: calc(100% - 1.5em);
+}
+
+div.GitLabCiTile div.tile-main div.project-name {
+  overflow-x: clip;
+  white-space: nowrap;
+}
+
+div.GitLabCiTile div.tile-main div.pipeline-status {
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+div.GitLabCiTile div.tile-main div.pipeline-duration {
+  text-align: center;
+}
+
+div.GitLabCiTile div.tile-footer {
+  height: 1.5em;
+}
+
+div.GitLabCiTile div.tile-footer div.pipeline-age {
+  float: left;
+}
+
+div.GitLabCiTile div.tile-footer div.pipeline-id {
+  float: right;
+}
+
+div.GitLabCiTile a,
+a:visited {
+  color: #dadcdd;
+}

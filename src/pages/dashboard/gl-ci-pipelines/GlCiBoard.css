@@ -1,5 +1,9 @@
 div.GitLabCiBoard {
+    align-content: center;
     display: flex;
-    height: 100%;
+    flex-wrap: wrap;
+    height: calc(100% - 4em);
+    justify-content: space-evenly;
     padding: 2em;
+    row-gap: 2em;
 }
