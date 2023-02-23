@@ -7,7 +7,9 @@ export class ConfigService {
   public loadConfig(): DashboardConfig | null {
     const json = localStorage.getItem("config");
     if (json) {
-      return JSON.parse(json);
+      let result = JSON.parse(json) as DashboardConfig;
+      result.lastUpdate = new Date(result.lastUpdate);
+      return result;
     }
     return null;
   }

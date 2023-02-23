@@ -33,9 +33,6 @@ class PageHeader extends React.Component<IProps> {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <Link className="button is-link is-light" to={`/test`}>
-                    Tests
-                  </Link>
                   {!this.props.hideConfig ? configLink : undefined}
                 </div>
               </div>

@@ -3,16 +3,18 @@ import { Gitlab } from "@gitbeaker/browser";
 import { Project } from "../model/project";
 import { Pipeline } from "../model/pipeline";
 
-export class DashboardService {
+export class GitLabService {
+  private static storageKey = "GitLab";
+
   /**
    * Loads the dashboard data.
    */
-  public loadData(): Project[] | null {
-    const json = localStorage.getItem("dashboard");
+  public loadData(): Project[] {
+    const json = localStorage.getItem(GitLabService.storageKey);
     if (json) {
       return JSON.parse(json);
     }
-    return null;
+    return [];
   }
 
   /**
@@ -34,13 +36,13 @@ export class DashboardService {
   /**
    * Updates the dashboard data by reloading all data via API.
    */
-  public async updateData() {
+  public async updateData(): Promise<Project[]> {
     console.debug("Starting update of dashboard data");
     const configService = new ConfigService();
     const config = configService.loadConfig();
     if (!config) {
       console.info("Can't update dasboard data: missing configuration");
-      return;
+      return [];
     }
 
     const api = new Gitlab({
@@ -79,11 +81,16 @@ export class DashboardService {
           projectList.push(new Project(projects[i], null));
         }
       }
-      localStorage.setItem("dashboard", JSON.stringify(projectList));
+      localStorage.setItem(
+        GitLabService.storageKey,
+        JSON.stringify(projectList)
+      );
       config.lastUpdate = new Date();
       configService.updateConfig(config);
+      return projectList;
     } catch (outerException) {
       console.debug("Failed to get list of projects");
+      return [];
     }
   }
 }

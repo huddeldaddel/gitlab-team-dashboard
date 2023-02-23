@@ -5,7 +5,6 @@ import ConfigPage from "./pages/config/Config";
 import DashboardPage from "./pages/dashboard/Dashboard";
 import HomePage from "./pages/home/Home";
 import PageFooter from "./components/PageFooter";
-import TestPage from "./pages/test/Test";
 import { ConfigService } from "./services/config-service";
 import { DashboardConfig } from "./model/dashboard-config";
 
@@ -26,26 +25,19 @@ class App extends React.Component<IProps, IState> {
   }
 
   render() {
-    let component = <div />;
-    if (!this.state.config) {
-      component = <HomePage config={null} />;
-    } else {
-      component = <DashboardPage config={this.state.config} />;
-    }
-
     return (
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={component} />
+            <Route path="/" element={<HomePage config={this.state.config} />} />
+            <Route
+              path="/board"
+              element={<DashboardPage config={this.state.config} />}
+            />
             <Route path="/config" element={<ConfigPage />} />
             <Route
               path="/home"
               element={<HomePage config={this.state.config} />}
-            />
-            <Route
-              path="/test"
-              element={<TestPage config={this.state.config!} />}
             />
           </Routes>
         </BrowserRouter>
