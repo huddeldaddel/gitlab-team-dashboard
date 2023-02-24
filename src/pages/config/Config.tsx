@@ -20,8 +20,8 @@ interface IState {
   selectedTab: number;
 }
 
-class ConfigPage extends React.Component<{}, IState> {
-  constructor(props: {}) {
+class ConfigPage extends React.Component<any, IState> {
+  constructor(props: any) {
     super(props);
 
     this.state = {
