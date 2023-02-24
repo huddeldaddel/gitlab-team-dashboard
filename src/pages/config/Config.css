@@ -1,3 +1,68 @@
 div.Page {
-    height: calc(100% - 4.5em);
+  height: calc(100% - 4.5em);
+}
+
+div.Page form {
+  padding: 2em;
+}
+
+div.Page form div.tabs {
+  margin-bottom: unset;
+}
+
+div.Page form div.container.configuration {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2em;
+  padding: 1.5em;
+  display: none;
+}
+
+div.Page form div.container.configuration.active {
+  display: inherit;
+}
+
+div.Page form div.container.configuration.actions {  
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5em;    
+}
+
+div.tabs.is-boxed li.is-active span.anchor {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: #dbdbdb;
+  border-bottom-color: rgb(219, 219, 219);
+  border-bottom-color: transparent !important;
+}
+
+.tabs li.is-active span.anchor {
+  border-bottom-color: #485fc7;
+  color: #485fc7;  
+}
+
+.tabs.tabs.is-boxed span.anchor:hover {
+  background-color: #f5f5f5;
+  border-bottom-color: #dbdbdb;
+}
+
+.tabs.is-boxed span.anchor {
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+}
+
+.tabs span.anchor {
+  align-items: center;
+  border-bottom-color: #dbdbdb;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  color: #4a4a4a;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -1px;
+  padding: 0.5em 1em;
+  vertical-align: top;
 }

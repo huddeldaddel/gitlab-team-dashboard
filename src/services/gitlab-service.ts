@@ -27,10 +27,10 @@ export class GitLabService {
       return false;
     }
 
-    const lastUpdate = config.lastUpdate;
+    const lastUpdate = config.gitlab?.lastUpdate || new Date("2000-01-01");
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - lastUpdate.getTime());
-    return diffTime / 1_000 / 60 >= config.refreshInterval;
+    return diffTime / 1_000 / 60 >= (config.gitlab?.refreshInterval || 15);
   }
 
   /**
@@ -40,17 +40,17 @@ export class GitLabService {
     console.debug("Starting update of dashboard data");
     const configService = new ConfigService();
     const config = configService.loadConfig();
-    if (!config) {
+    if (!config || !config.gitlab) {
       console.info("Can't update dasboard data: missing configuration");
       return [];
     }
 
     const api = new Gitlab({
-      host: config?.gitlab?.host,
-      token: config?.gitlab?.token,
+      host: config.gitlab.host,
+      token: config.gitlab.token,
     });
     const maxPages =
-      typeof config?.gitlab?.maxProjectCount == "number"
+      typeof config.gitlab.maxProjectCount == "number"
         ? config.gitlab.maxProjectCount / 20
         : undefined;
 
@@ -85,7 +85,7 @@ export class GitLabService {
         GitLabService.storageKey,
         JSON.stringify(projectList)
       );
-      config.lastUpdate = new Date();
+      config.gitlab.lastUpdate = new Date();
       configService.updateConfig(config);
       return projectList;
     } catch (outerException) {

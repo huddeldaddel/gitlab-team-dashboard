@@ -8,7 +8,9 @@ export class ConfigService {
     const json = localStorage.getItem("config");
     if (json) {
       let result = JSON.parse(json) as DashboardConfig;
-      result.lastUpdate = new Date(result.lastUpdate);
+      if (result.gitlab && result.gitlab.lastUpdate) {
+        result.gitlab.lastUpdate = new Date(result.gitlab.lastUpdate);
+      }
       return result;
     }
     return null;

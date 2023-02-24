@@ -29,6 +29,7 @@ div.GitLabCiTile div.tile-main {
 
 div.GitLabCiTile div.tile-main div.project-name {
   overflow-x: clip;
+  text-align: center;
   white-space: nowrap;
 }
 
