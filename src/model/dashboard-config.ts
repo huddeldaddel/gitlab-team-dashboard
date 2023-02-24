@@ -1,11 +1,12 @@
+import { DisplayConfig } from "./display-config";
 import { GitLabConfig } from "./gitlab-config";
 
 export class DashboardConfig {
-  gitlab: GitLabConfig | null = null;
-  lastUpdate: Date = new Date("2000-01-01");
-  refreshInterval = 15;
+  display: DisplayConfig | null = null;
+  gitlab: GitLabConfig | null = null;    
 
-  constructor(gitlab: GitLabConfig) {
+  constructor(display: DisplayConfig, gitlab: GitLabConfig) {
+    this.display = display;
     this.gitlab = gitlab;
   }
 }
