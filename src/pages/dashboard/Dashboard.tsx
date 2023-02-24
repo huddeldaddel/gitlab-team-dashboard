@@ -36,12 +36,13 @@ class DashboardPage extends React.Component<IProps, IState> {
         });
       }
     };
+    callback();
     this.updateInterval = setInterval(callback, 60_000);
   }
 
   componentWillUnmount(): void {
     if (this.updateInterval) {
-      clearInterval(this.updateInterval!);
+      clearInterval(this.updateInterval);
     }
   }
 
