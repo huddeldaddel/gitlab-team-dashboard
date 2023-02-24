@@ -10,8 +10,6 @@ import GitLabIcon from "./GitLabIcon";
 
 import "./Config.css";
 
-interface IProps {}
-
 interface IState {
   displayNumberOfPipelines: number;
 
@@ -22,8 +20,8 @@ interface IState {
   selectedTab: number;
 }
 
-class ConfigPage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+class ConfigPage extends React.Component<{}, IState> {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
@@ -54,7 +52,7 @@ class ConfigPage extends React.Component<IProps, IState> {
   }
 
   initializeState() {
-    var config = new ConfigService().loadConfig();
+    const config = new ConfigService().loadConfig();
     if (config) {
       this.setState({
         displayNumberOfPipelines: config.display?.numberOfPipelines || 15,
@@ -109,11 +107,11 @@ class ConfigPage extends React.Component<IProps, IState> {
   }
 
   handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    var maxProjectCount =
+    const maxProjectCount =
       0 < this.state.gitLabMaxProjectCount
         ? this.state.gitLabMaxProjectCount
         : undefined;
-    var config = new DashboardConfig(
+    const config = new DashboardConfig(
       new DisplayConfig(this.state.displayNumberOfPipelines),
       new GitLabConfig(
         this.state.gitLabHost,
