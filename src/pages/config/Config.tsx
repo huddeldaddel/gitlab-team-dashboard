@@ -208,8 +208,8 @@ class ConfigPage extends React.Component<any, IState> {
                 <div className="control">
                   <div className="select">
                     <select
-                      value={this.state.gitLabMaxProjectCount}
-                      onChange={this.handleGitLabMaxProjectCountChange}
+                      value={this.state.gitLabRefreshInterval}
+                      onChange={this.handleGitLabRefreshIntervalChange}
                     >
                       <option value="5">Every 5 minutes</option>
                       <option value="10">Every 10 minutes</option>
@@ -228,8 +228,8 @@ class ConfigPage extends React.Component<any, IState> {
                 <div className="control">
                   <div className="select">
                     <select
-                      value={this.state.gitLabRefreshInterval}
-                      onChange={this.handleGitLabRefreshIntervalChange}
+                      value={this.state.gitLabMaxProjectCount}
+                      onChange={this.handleGitLabMaxProjectCountChange}
                     >
                       <option value="0">No. Show all projects.</option>
                       <option value="20">Yes. Show 20 projects.</option>
