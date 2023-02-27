@@ -20,10 +20,12 @@ interface IState {
 
 class DashboardPage extends React.Component<IProps, IState> {
   private defaultTileCount = 15;
+  private pageFlipInterval: NodeJS.Timer | null;
   private updateInterval: NodeJS.Timer | null;
 
   constructor(props: IProps) {
     super(props);
+    this.pageFlipInterval = null;
     this.updateInterval = null;
     this.state = {
       gitLabProjects: new GitLabService().loadData(),
@@ -33,7 +35,22 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   componentDidMount(): void {
-    const callback = () => {
+    const pageFlipCallback = () => {
+      this.setState({
+        page:
+          (this.state.page + 1) %
+          (1 +
+            Math.floor(
+              this.filterGitLabProjectsWithPipelines(this.state.gitLabProjects)
+                .length /
+                (this.props.config?.display?.numberOfPipelines ||
+                  this.defaultTileCount)
+            )),
+      });
+    };
+    this.pageFlipInterval = setInterval(pageFlipCallback, 60_000);
+
+    const updateCallback = () => {
       const service = new GitLabService();
       if (service.shouldUpdate()) {
         service.updateData().then((projects) => {
@@ -44,10 +61,13 @@ class DashboardPage extends React.Component<IProps, IState> {
         });
       }
     };
-    this.updateInterval = setInterval(callback, 60_000);
+    this.updateInterval = setInterval(updateCallback, 60_000);
   }
 
   componentWillUnmount(): void {
+    if (this.pageFlipInterval) {
+      clearInterval(this.pageFlipInterval);
+    }
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
     }
@@ -88,7 +108,7 @@ class DashboardPage extends React.Component<IProps, IState> {
   private filterGitLabProjectsWithPipelines(projects: Project[]): Project[] {
     return (
       projects
-        // .filter((p) => !!p.pipeline)
+        .filter((p) => !!p.pipeline)
         .sort((a, b) => {
           const nameA = a.name.toUpperCase();
           const nameB = b.name.toUpperCase();
@@ -104,7 +124,7 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   handlePageSelected(page: number) {
-    this.setState({page: page});
+    this.setState({ page: page });
   }
 }
 
