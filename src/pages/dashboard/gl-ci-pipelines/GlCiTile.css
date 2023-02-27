@@ -57,6 +57,6 @@ div.GitLabCiTile div.tile-footer div.pipeline-id {
 }
 
 div.GitLabCiTile a,
-a:visited {
+div.GitLabCiTile a:visited {
   color: #dadcdd;
 }
