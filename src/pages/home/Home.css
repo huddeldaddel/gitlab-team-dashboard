@@ -1,3 +1,7 @@
 div.Page {
     height: calc(100% - 4.5em);
 }
+
+div.container {
+    padding: 2em 0em;
+}

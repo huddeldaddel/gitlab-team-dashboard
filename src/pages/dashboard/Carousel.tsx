@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export default function Carousel(props: IProps) {
-  let dots = Array.from({ length: props.elements }, (_, i) => i).map(
+  const dots = Array.from({ length: props.elements }, (_, i) => i).map(
     (index) => (
       <input
         type="radio"        
