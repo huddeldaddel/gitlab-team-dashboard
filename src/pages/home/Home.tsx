@@ -20,7 +20,7 @@ function HomePage(props: IProps) {
 
   return (
     <div className="Page TestPage">
-      <PageHeader title="GitLab Team Dashboard - Home" />
+      <PageHeader title="Home" />
       <div className="container">
         <h2 className="is-size-2">Welcome</h2>
         <p className="mt-2">
