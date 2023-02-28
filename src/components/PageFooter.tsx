@@ -10,7 +10,7 @@ class PageFooter extends React.Component {
           <p>
             <strong>GitLab Team Dashboard</strong> by{" "}
             <a href="https://www.thomas-werner.engineer">Thomas Werner</a>. The
-            source code is licensed{" "}
+            <a href="https://github.com/huddeldaddel/gitlab-team-dashboard">source code</a> is licensed{" "}
             <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
           </p>
         </div>
