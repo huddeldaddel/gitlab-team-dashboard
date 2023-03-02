@@ -28,16 +28,32 @@ export default function GlMrBoard(props: IProps) {
       });
   }
 
-  const oldestMergeRequest = getOldestMergeRequests();
+  function getProjectNameForMergeRequest(mr: MergeRequest): string {
+    for (let i = 0; i < props.projects.length; i++) {
+      const mrs = props.projects[i].mergeRequests.map((mr) => mr.id);
+      if (mrs.indexOf(mr.id) !== 1) {
+        return props.projects[i].name;
+      }
+    }
+    return "";
+  }
+
+  const oldestMergeRequests = getOldestMergeRequests();
 
   let maxAgeInSeconds = 0;
-  if (oldestMergeRequest.length > 0) {
-    var a = moment(new Date(oldestMergeRequest[0].createdAt));
+  if (oldestMergeRequests.length > 0) {
+    var a = moment(new Date(oldestMergeRequests[0].createdAt));
     maxAgeInSeconds = moment().diff(a, "seconds");
   }
 
-  const rows = oldestMergeRequest.map((mr) => (
-    <GlMrRow key={mr.id} mergeRequest={mr} maxAgeInSeconds={maxAgeInSeconds} />
+  // TODO: Limit number of merge requests to the number of visible row or a configured value
+  const rows = oldestMergeRequests.map((mr) => (
+    <GlMrRow
+      key={mr.id}
+      mergeRequest={mr}
+      maxAgeInSeconds={maxAgeInSeconds}
+      projectName={getProjectNameForMergeRequest(mr)}
+    />
   ));
 
   return <div className="GlMrBoard">{rows}</div>;
