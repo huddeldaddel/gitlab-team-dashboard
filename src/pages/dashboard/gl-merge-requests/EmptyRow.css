@@ -1,0 +1,10 @@
+div.GlMrRow.Empty {
+  box-shadow: none;
+  height: auto;
+}
+
+div.GlMrRow.Empty div.Author,
+div.GlMrRow.Empty div.Progress,
+div.GlMrRow.Empty div.Age {
+  opacity: 0.0;  
+}

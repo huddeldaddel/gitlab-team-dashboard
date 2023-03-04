@@ -3,6 +3,7 @@ import moment from "moment";
 
 import { MergeRequest } from "../../../model/merge-request";
 import { Project } from "../../../model/project";
+import EmptyRow from "./EmptyRow";
 import GlMrRow from "./GlMrRow";
 import "./GlMrBoard.css";
 
@@ -56,5 +57,10 @@ export default function GlMrBoard(props: IProps) {
     />
   ));
 
-  return <div className="GlMrBoard">{rows}</div>;
+  return (
+    <div className="GlMrBoard">
+      {rows}
+      <EmptyRow />
+    </div>
+  );
 }
