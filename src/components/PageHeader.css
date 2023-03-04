@@ -2,6 +2,11 @@
     opacity: 0.65;
 }
 
+svg#config {
+    height: auto;    
+    width: 1.5rem; 
+}
+
 svg#logo {
     height: auto;
     margin-right: 0.25em;

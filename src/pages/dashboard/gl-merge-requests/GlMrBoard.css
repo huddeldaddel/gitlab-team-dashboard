@@ -1,0 +1,14 @@
+div.GlMrBoard {
+    display: flex;
+    flex-direction: column;
+    flex-flow: column wrap;
+    gap: 0.25em;
+    height: 100%;
+    max-height: calc(100% - 6em);    
+    overflow: hidden;
+    padding-top: 1em;
+    padding-left: 0em;
+    padding-right: 0.5em;
+    padding-bottom: 1em;
+    width: 100%;
+}

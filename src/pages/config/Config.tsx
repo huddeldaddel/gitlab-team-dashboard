@@ -129,7 +129,7 @@ class ConfigPage extends React.Component<any, IState> {
     return (
       <div className="Page ConfigPage">
         <PageHeader
-          title="GitLab Team Dashboard - Configuration"
+          title="Configuration"
           hideConfig={true}
         />
 

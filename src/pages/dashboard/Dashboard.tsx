@@ -6,6 +6,7 @@ import { GitLabService } from "../../services/gitlab-service";
 import PageHeader from "../../components/PageHeader";
 import Carousel from "./Carousel";
 import GlCiBoard from "./gl-ci-pipelines/GlCiBoard";
+import GlMrBoard from "./gl-merge-requests/GlMrBoard";
 
 import "./Dashboard.css";
 
@@ -32,6 +33,8 @@ class DashboardPage extends React.Component<IProps, IState> {
       page: 0,
     };
     this.handlePageSelected = this.handlePageSelected.bind(this);
+    this.renderCiBoard = this.renderCiBoard.bind(this);
+    this.renderMrBoard = this.renderMrBoard.bind(this);
   }
 
   componentDidMount(): void {
@@ -39,7 +42,8 @@ class DashboardPage extends React.Component<IProps, IState> {
       this.setState({
         page:
           (this.state.page + 1) %
-          (1 +
+          (1 + // one extra page for merge requests
+            1 +
             Math.floor(
               this.filterGitLabProjectsWithPipelines(this.state.gitLabProjects)
                 .length /
@@ -48,7 +52,8 @@ class DashboardPage extends React.Component<IProps, IState> {
             )),
       });
     };
-    this.pageFlipInterval = setInterval(pageFlipCallback, 60_000);
+    // TODO: Revert this
+    this.pageFlipInterval = setInterval(pageFlipCallback, 600_000);
 
     const updateCallback = () => {
       const service = new GitLabService();
@@ -81,14 +86,36 @@ class DashboardPage extends React.Component<IProps, IState> {
     const pageSize =
       this.props.config?.display?.numberOfPipelines || this.defaultTileCount;
 
-    const pages = 1 + Math.floor(projects.length / pageSize);
+    const ciBoardPages = 1 + Math.floor(projects.length / pageSize);
+    const mrBoardPages = 1;
+    const pages = ciBoardPages + mrBoardPages;
+
+    if (this.state.page < ciBoardPages) {      
+      return this.renderCiBoard(projects, pageSize, pages);
+    } else {
+      return this.renderMrBoard(pages);
+    }
+  }
+
+  private renderMrBoard(pages: number) {
+    return <div className="Page Dashboard">
+      <PageHeader title="Oldest Merge Requests" />
+      <Carousel
+        currentElement={this.state.page}
+        elements={pages}
+        onElementSelected={this.handlePageSelected} />
+      <GlMrBoard projects={this.state.gitLabProjects} />
+    </div>;
+  }
+
+  private renderCiBoard(projects: Project[], pageSize: number, pages: number) {
     const projectsForPage = projects.slice(
       this.state.page * pageSize,
       Math.min(projects.length, this.state.page * pageSize + pageSize)
     );
     return (
-      <div className="Page GitLabPipelines">
-        <PageHeader title="GitLab Team Dashboard - Build Pipelines" />
+      <div className="Page Dashboard">
+        <PageHeader title="Build Pipelines" />
         <Carousel
           currentElement={this.state.page}
           elements={pages}
@@ -106,21 +133,19 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   private filterGitLabProjectsWithPipelines(projects: Project[]): Project[] {
-    return (
-      projects
-        .filter((p) => !!p.pipeline)
-        .sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        })
-    );
+    return projects
+      .filter((p) => !!p.pipeline)
+      .sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
   }
 
   handlePageSelected(page: number) {

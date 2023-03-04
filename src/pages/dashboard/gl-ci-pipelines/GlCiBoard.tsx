@@ -14,5 +14,5 @@ export default function GlCiBoard(props: IProps) {
     <GlCiTile key={project.id} project={project} />
   ));
 
-  return <div className="GitLabCiBoard">{tiles}</div>;
+  return <div className="GlCiBoard">{tiles}</div>;
 }
