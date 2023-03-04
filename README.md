@@ -2,14 +2,14 @@
 [![image](https://api.codiga.io/project/35798/score/svg)](https://app.codiga.io/hub/project/35798/gitlab-team-dashboard)
 [![Azure Static Web Apps CI/CD](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml/badge.svg?branch=main)](https://github.com/huddeldaddel/gitlab-team-dashboard/actions/workflows/azure-static-web-apps-zealous-water-0a5e94103.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Known Vulnerabilities](https://snyk.io/test/github/huddeldaddel/gitlab-team-dashboard/badge.svg)](https://snyk.io/test/github/huddeldaddel/gitlab-team-dashboard)
 
 # GitLab Team Dashboard
 
-The aim of the project is to create a dynamic dashboard for GitLab. This dashboard should display various useful information and switch regularly between different displays. Planned are among others: 
+This is a dynamic dashboard that displays the status of various development projects hosted in GitLab. The dashboard is designed to be displayed on a TV screen or some larg display. 
 
-* a visualisation of the status of the build pipelines
-* an overview of the oldest merge requests that are still open.
+![image](./docs/Build-Pipelines.png)
+
+![image](./docs/Oldest-Merge-Requests.png)
 
 ## Hosted version
 
