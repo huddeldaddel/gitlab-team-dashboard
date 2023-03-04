@@ -34,7 +34,7 @@ export default function GlMrRow(props: IProps) {
   }
   let backgroundStyle = `linear-gradient(to left, whitesmoke 0 ${
     100 - barLength
-  }%, ${barColor} ${100 - barLength}%  100%)`;  
+  }%, ${barColor} ${100 - barLength}%  100%)`;
   let barStyle: React.CSSProperties = {
     background: backgroundStyle,
     height: "0.5em",
@@ -44,9 +44,11 @@ export default function GlMrRow(props: IProps) {
     <div className="GlMrRow">
       <div className="Author">{authorImage}</div>
       <div className="Progress">
-        <div className="Bar" style={barStyle}></div>
-        <div className="Description is-size-7 has-text-dark">
-          {props.projectName} - {props.mergeRequest.title}
+        <div className="PrContent">
+          <div className="Bar" style={barStyle}></div>
+          <div className="Description is-size-7 has-text-dark">
+            <span className="ProjectName">{props.projectName}</span> - {props.mergeRequest.title}
+          </div>
         </div>
       </div>
       <div className="Age has-text-dark">

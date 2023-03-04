@@ -1,6 +1,4 @@
 div.GlMrBoard {
-    border-collapse: separate;
-    border-spacing: 0.25em 1em;    
     display: flex;
     flex-direction: column;
     flex-flow: column wrap;

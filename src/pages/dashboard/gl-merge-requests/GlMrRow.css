@@ -1,6 +1,6 @@
 div.GlMrRow {
   display: flex;
-  height: calc(80px + 0.25em);
+  height: 80px;
   margin-bottom: 0.5em;
   padding-left: 1em;
   width: 100%;
@@ -10,8 +10,8 @@ div.Author,
 div.Progress,
 div.Age {
   background-color: whitesmoke;
-  color: #dadcdd;  
-  opacity: 0.9;  
+  color: #dadcdd;
+  opacity: 0.9;
 }
 
 div.Author {
@@ -19,21 +19,33 @@ div.Author {
 }
 
 div.Author img {
-  height: 80px;
+  height: 80px;  
   width: 80px;
 }
 
 div.Progress {
-  padding: 0.75em;
+  height: 80px;
   width: calc(100% - 160px - 80px - 0.5em);
 }
 
-div.Progress div.Description {
+div.PrContent {
+  margin-top: calc((80px - 1.5em) / 2);
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+div.Progress div.PrContent div.Description {  
   overflow: hidden;
   white-space: nowrap;
 }
 
+div.Progress div.PrContent div.Description span.ProjectName {
+  font-weight: bold;
+}
+
 div.Age {
+  font-weight: bold;
+  padding-top: calc((80px + 0.25em - 1.5em) / 2);
   text-align: center;
   width: 160px;
 }
