@@ -3,7 +3,6 @@ import moment from "moment";
 
 import { MergeRequest } from "../../../model/merge-request";
 import { Project } from "../../../model/project";
-import EmptyRow from "./EmptyRow";
 import GlMrRow from "./GlMrRow";
 import "./GlMrBoard.css";
 
@@ -47,8 +46,7 @@ export default function GlMrBoard(props: IProps) {
     maxAgeInSeconds = moment().diff(a, "seconds");
   }
 
-  // TODO: Limit number of merge requests to the number of visible row or a configured value
-  const rows = oldestMergeRequests.map((mr) => (
+    const rows = oldestMergeRequests.map((mr) => (
     <GlMrRow
       key={mr.id}
       mergeRequest={mr}
@@ -57,10 +55,5 @@ export default function GlMrBoard(props: IProps) {
     />
   ));
 
-  return (
-    <div className="GlMrBoard">
-      {rows}
-      <EmptyRow />
-    </div>
-  );
+  return <div className="GlMrBoard">{rows}</div>;
 }
