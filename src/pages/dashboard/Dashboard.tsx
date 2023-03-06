@@ -51,7 +51,7 @@ class DashboardPage extends React.Component<IProps, IState> {
                   this.defaultTileCount)
             )),
       });
-    };    
+    };
     this.pageFlipInterval = setInterval(pageFlipCallback, 60_000);
 
     const updateCallback = () => {
@@ -85,11 +85,15 @@ class DashboardPage extends React.Component<IProps, IState> {
     const pageSize =
       this.props.config?.display?.numberOfPipelines || this.defaultTileCount;
 
-    const ciBoardPages = 1 + Math.floor(projects.length / pageSize);
+    let ciBoardPages = Math.floor(projects.length / pageSize);
+    if (0 !== projects.length % pageSize) {
+      ciBoardPages++;
+    }
+
     const mrBoardPages = 1;
     const pages = ciBoardPages + mrBoardPages;
 
-    if (this.state.page < ciBoardPages) {      
+    if (this.state.page < ciBoardPages) {
       return this.renderCiBoard(projects, pageSize, pages);
     } else {
       return this.renderMrBoard(pages);
@@ -97,14 +101,17 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   private renderMrBoard(pages: number) {
-    return <div className="Page Dashboard">
-      <PageHeader title="Oldest Merge Requests" />
-      <Carousel
-        currentElement={this.state.page}
-        elements={pages}
-        onElementSelected={this.handlePageSelected} />
-      <GlMrBoard projects={this.state.gitLabProjects} />
-    </div>;
+    return (
+      <div className="Page Dashboard">
+        <PageHeader title="Oldest Merge Requests" />
+        <Carousel
+          currentElement={this.state.page}
+          elements={pages}
+          onElementSelected={this.handlePageSelected}
+        />
+        <GlMrBoard projects={this.state.gitLabProjects} />
+      </div>
+    );
   }
 
   private renderCiBoard(projects: Project[], pageSize: number, pages: number) {
