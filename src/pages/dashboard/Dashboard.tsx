@@ -51,9 +51,8 @@ class DashboardPage extends React.Component<IProps, IState> {
                   this.defaultTileCount)
             )),
       });
-    };
-    // TODO: Revert this
-    this.pageFlipInterval = setInterval(pageFlipCallback, 600_000);
+    };    
+    this.pageFlipInterval = setInterval(pageFlipCallback, 60_000);
 
     const updateCallback = () => {
       const service = new GitLabService();
