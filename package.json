@@ -17,6 +17,7 @@
     "react-router": "^6.8.1",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
+    "react-ts-typewriter": "^0.1.8-b",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

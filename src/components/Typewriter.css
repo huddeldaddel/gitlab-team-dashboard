@@ -1,0 +1,17 @@
+div.Typewriter {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+div.Typewriter div.Container {
+  font-family: "Source Code Pro", monospace;
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+}

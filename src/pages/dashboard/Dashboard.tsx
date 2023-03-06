@@ -7,6 +7,7 @@ import PageHeader from "../../components/PageHeader";
 import Carousel from "./Carousel";
 import GlCiBoard from "./gl-ci-pipelines/GlCiBoard";
 import GlMrBoard from "./gl-merge-requests/GlMrBoard";
+import Typewriter from "../../components/Typewriter";
 
 import "./Dashboard.css";
 
@@ -16,6 +17,7 @@ interface IProps {
 
 interface IState {
   gitLabProjects: Project[];
+  loading: boolean;
   page: number;
 }
 
@@ -28,10 +30,15 @@ class DashboardPage extends React.Component<IProps, IState> {
     super(props);
     this.pageFlipInterval = null;
     this.updateInterval = null;
+
+    const gitLabService = new GitLabService();
+    const projects = gitLabService.loadData();
     this.state = {
-      gitLabProjects: new GitLabService().loadData(),
+      gitLabProjects: projects,
+      loading: gitLabService.shouldUpdate() && projects.length === 0,
       page: 0,
     };
+
     this.handlePageSelected = this.handlePageSelected.bind(this);
     this.renderCiBoard = this.renderCiBoard.bind(this);
     this.renderMrBoard = this.renderMrBoard.bind(this);
@@ -60,6 +67,7 @@ class DashboardPage extends React.Component<IProps, IState> {
         service.updateData().then((projects) => {
           this.setState({
             gitLabProjects: projects,
+            loading: false,
             page: 0,
           });
         });
@@ -78,26 +86,39 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   render() {
-    const projects = this.filterGitLabProjectsWithPipelines(
-      this.state.gitLabProjects
-    );
-
-    const pageSize =
-      this.props.config?.display?.numberOfPipelines || this.defaultTileCount;
-
-    let ciBoardPages = Math.floor(projects.length / pageSize);
-    if (0 !== projects.length % pageSize) {
-      ciBoardPages++;
-    }
-
-    const mrBoardPages = 1;
-    const pages = ciBoardPages + mrBoardPages;
-
-    if (this.state.page < ciBoardPages) {
-      return this.renderCiBoard(projects, pageSize, pages);
+    if(this.state.loading) {
+      return this.renderLoadingAnimation();
     } else {
-      return this.renderMrBoard(pages);
+      const projects = this.filterGitLabProjectsWithPipelines(
+        this.state.gitLabProjects
+      );
+  
+      const pageSize =
+        this.props.config?.display?.numberOfPipelines || this.defaultTileCount;
+  
+      let ciBoardPages = Math.floor(projects.length / pageSize);
+      if (0 !== projects.length % pageSize) {
+        ciBoardPages++;
+      }
+  
+      const mrBoardPages = 1;
+      const pages = ciBoardPages + mrBoardPages;
+  
+      if (this.state.page < ciBoardPages) {
+        return this.renderCiBoard(projects, pageSize, pages);
+      } else {
+        return this.renderMrBoard(pages);
+      }
     }
+  }
+
+  private renderLoadingAnimation() {
+    return (
+      <div className="Page Dashboard">
+        <PageHeader title="Refreshing data" />
+        <Typewriter text="Preparing dashboard. Please wait..."/>
+      </div>
+    );
   }
 
   private renderMrBoard(pages: number) {

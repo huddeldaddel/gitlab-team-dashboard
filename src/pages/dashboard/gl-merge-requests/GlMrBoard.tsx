@@ -4,6 +4,7 @@ import moment from "moment";
 import { MergeRequest } from "../../../model/merge-request";
 import { Project } from "../../../model/project";
 import GlMrRow from "./GlMrRow";
+import Typewriter from "../../../components/Typewriter";
 import "./GlMrBoard.css";
 
 interface IProps {
@@ -41,12 +42,15 @@ export default function GlMrBoard(props: IProps) {
   const oldestMergeRequests = getOldestMergeRequests();
 
   let maxAgeInSeconds = 0;
-  if (oldestMergeRequests.length > 0) {
-    var a = moment(new Date(oldestMergeRequests[0].createdAt));
-    maxAgeInSeconds = moment().diff(a, "seconds");
+  if (oldestMergeRequests.length === 0) {
+    return <div className="GlMrBoard">
+       <Typewriter text="No data available" />
+    </div>;
   }
 
-    const rows = oldestMergeRequests.map((mr) => (
+  const a = moment(new Date(oldestMergeRequests[0].createdAt));
+  maxAgeInSeconds = moment().diff(a, "seconds");
+  const rows = oldestMergeRequests.map((mr) => (
     <GlMrRow
       key={mr.id}
       mergeRequest={mr}
