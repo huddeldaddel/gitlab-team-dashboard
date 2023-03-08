@@ -17,17 +17,19 @@ interface IProps {
 
 interface IState {
   gitLabProjects: Project[];
-  loading: boolean;
-  page: number;
+  loadingAnimation: boolean;
+  page: number;  
 }
 
 class DashboardPage extends React.Component<IProps, IState> {
   private defaultTileCount = 15;
+  private loadingProjects: boolean;
   private pageFlipInterval: NodeJS.Timer | null;
   private updateInterval: NodeJS.Timer | null;
 
   constructor(props: IProps) {
     super(props);
+    this.loadingProjects = false;
     this.pageFlipInterval = null;
     this.updateInterval = null;
 
@@ -35,7 +37,7 @@ class DashboardPage extends React.Component<IProps, IState> {
     const projects = gitLabService.loadData();
     this.state = {
       gitLabProjects: projects,
-      loading: gitLabService.shouldUpdate() && projects.length === 0,
+      loadingAnimation: gitLabService.shouldUpdate() && projects.length === 0,
       page: 0,
     };
 
@@ -63,17 +65,19 @@ class DashboardPage extends React.Component<IProps, IState> {
 
     const updateCallback = () => {
       const service = new GitLabService();
-      if (service.shouldUpdate()) {
+      if (service.shouldUpdate() && !this.loadingProjects) {
+        this.loadingProjects = true;
         service.updateData().then((projects) => {
+          this.loadingProjects = false;
           this.setState({
             gitLabProjects: projects,
-            loading: false,
+            loadingAnimation: false,
             page: 0,
           });
         });
       }
     };
-    this.updateInterval = setInterval(updateCallback, 60_000);
+    this.updateInterval = setInterval(updateCallback, 30_000);
   }
 
   componentWillUnmount(): void {
@@ -86,7 +90,7 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   render() {
-    if(this.state.loading) {
+    if(this.state.loadingAnimation) {
       return this.renderLoadingAnimation();
     } else {
       const projects = this.filterGitLabProjectsWithPipelines(
