@@ -5,15 +5,33 @@
 
 # GitLab Team Dashboard
 
-This is a dynamic dashboard that displays the status of various development projects hosted in GitLab. The dashboard is designed to be displayed on a TV screen or some larg display. 
+This is a dynamic dashboard that displays the status of development projects managed in GitLab (on site or in the cloud). The dashboard is designed to be displayed on a TV screen or some large display. 
 
-![image](./docs/Build-Pipelines.png)
+The dashboard loops through multiple views. These views currently are:
 
-![image](./docs/Oldest-Merge-Requests.png)
+*   **Status of CI/CD Pipelines**  
+    ![image](./docs/Build-Pipelines.png)
+*   **List of oldest open Merge Requests**  
+    ![image](./docs/Oldest-Merge-Requests.png)
+
+## Build 
+
+### Requirements
+
+*   [Node.js](https://nodejs.org) version 18 or newer
+*   npm
+
+### Steps
+
+*   Get the source code
+*   Open a shell and change into root folder of project
+*   Run `npm i` to install dependencies
+*   Run `npm run build` to generate static pages
+*   Now deploy content of the *build* folder to some web server
 
 ## Hosted version
 
-The latest version can be found at https://gitlab-dashboard.thomas-werner.engineer.
+No need to build and host the dashboard yourself - unless you want to extend or adapt the source code. You can always find the latest version at https://gitlab-dashboard.thomas-werner.engineer.
 
 ## Security
 
