@@ -11,7 +11,8 @@ import GitLabIcon from "./GitLabIcon";
 import "./Config.css";
 
 interface IState {
-  displayNumberOfPipelines: number;
+  ciBoardColumns: number;
+  ciBoardRows: number;
 
   gitLabHost: string;
   gitLabMaxProjectCount: number;
@@ -25,7 +26,8 @@ class ConfigPage extends React.Component<any, IState> {
     super(props);
 
     this.state = {
-      displayNumberOfPipelines: 15,
+      ciBoardColumns: 5,
+      ciBoardRows: 3,
       gitLabHost: "",
       gitLabMaxProjectCount: 0,
       gitLabRefreshInterval: 15,
@@ -34,8 +36,10 @@ class ConfigPage extends React.Component<any, IState> {
     };
 
     this.initializeState = this.initializeState.bind(this);
-    this.handleDisplayNumberOfPipelinesChange =
-      this.handleDisplayNumberOfPipelinesChange.bind(this);
+    this.handleDisplayCiBoardColumnsChange =
+      this.handleDisplayCiBoardColumnsChange.bind(this);
+    this.handleDisplayCiBoardRowsChange =
+      this.handleDisplayCiBoardRowsChange.bind(this);
     this.handleGitLabHostChange = this.handleGitLabHostChange.bind(this);
     this.handleGitLabMaxProjectCountChange =
       this.handleGitLabMaxProjectCountChange.bind(this);
@@ -55,7 +59,8 @@ class ConfigPage extends React.Component<any, IState> {
     const config = new ConfigService().loadConfig();
     if (config) {
       this.setState({
-        displayNumberOfPipelines: config.display?.numberOfPipelines || 15,
+        ciBoardColumns: config.display?.ciBoardColumns || 5,
+        ciBoardRows: config.display?.ciBoardRows || 3,
         gitLabHost: config.gitlab?.host || "",
         gitLabMaxProjectCount:
           typeof config.gitlab?.maxProjectCount == "number"
@@ -66,7 +71,8 @@ class ConfigPage extends React.Component<any, IState> {
       });
     } else {
       this.setState({
-        displayNumberOfPipelines: 15,
+        ciBoardColumns: 5,
+        ciBoardRows: 3,
         gitLabHost: "",
         gitLabMaxProjectCount: 0,
         gitLabRefreshInterval: 15,
@@ -83,10 +89,17 @@ class ConfigPage extends React.Component<any, IState> {
     this.setState({ selectedTab: 0 });
   }
 
-  handleDisplayNumberOfPipelinesChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleDisplayCiBoardColumnsChange(e: React.ChangeEvent<HTMLInputElement>) {
     const inputAsNumber = parseInt(e.currentTarget.value);
     this.setState({
-      displayNumberOfPipelines: isNaN(inputAsNumber) ? 0 : inputAsNumber,
+      ciBoardColumns: isNaN(inputAsNumber) ? 0 : inputAsNumber,
+    });
+  }
+
+  handleDisplayCiBoardRowsChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const inputAsNumber = parseInt(e.currentTarget.value);
+    this.setState({
+      ciBoardRows: isNaN(inputAsNumber) ? 0 : inputAsNumber,
     });
   }
 
@@ -112,7 +125,7 @@ class ConfigPage extends React.Component<any, IState> {
         ? this.state.gitLabMaxProjectCount
         : undefined;
     const config = new DashboardConfig(
-      new DisplayConfig(this.state.displayNumberOfPipelines),
+      new DisplayConfig(this.state.ciBoardColumns, this.state.ciBoardRows),
       new GitLabConfig(
         this.state.gitLabHost,
         this.state.gitLabToken,
@@ -128,10 +141,7 @@ class ConfigPage extends React.Component<any, IState> {
   render() {
     return (
       <div className="Page ConfigPage">
-        <PageHeader
-          title="Configuration"
-          hideConfig={true}
-        />
+        <PageHeader title="Configuration" hideConfig={true} />
 
         <div className="container is-max-desktop">
           <form>
@@ -251,15 +261,30 @@ class ConfigPage extends React.Component<any, IState> {
             >
               <div className="field">
                 <label className="label">
-                  How many tiles do you want to see on the CI pipeline board?
+                  How many columns do you want to see on the CI pipeline board?
                 </label>
                 <div className="control">
                   <input
                     className="input"
                     type="text"
                     placeholder="15"
-                    value={this.state.displayNumberOfPipelines}
-                    onChange={this.handleDisplayNumberOfPipelinesChange}
+                    value={this.state.ciBoardColumns}
+                    onChange={this.handleDisplayCiBoardColumnsChange}
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">
+                  How many rows do you want to see on the CI pipeline board?
+                </label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="15"
+                    value={this.state.ciBoardRows}
+                    onChange={this.handleDisplayCiBoardRowsChange}
                   />
                 </div>
               </div>

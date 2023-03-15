@@ -7,6 +7,7 @@ import "./GlCiTile.css";
 
 interface IProps {
   project: Project;
+  width: string;
 }
 
 function GlCiTile(props: IProps) {
@@ -29,22 +30,26 @@ function GlCiTile(props: IProps) {
   }
 
   return (
-    <div className={getTileClassName()}>
-      <a href={props.project.pipeline?.webUrl}>
-        <div className="tile-main">
-          <div className="project-name">{props.project.name}</div>
-          <div className="pipeline-status">
-            {props.project.pipeline?.status}
+    <div className="GlCiTileCell" style={{ width: props.width }}>
+      <div className={getTileClassName()}>
+        <a href={props.project.pipeline?.webUrl}>
+          <div className="tile-main">
+            <div className="project-name">{props.project.name}</div>
+            <div className="pipeline-status">
+              {props.project.pipeline?.status}
+            </div>
+            <div className="pipeline-duration">
+              {moment.duration(duration).humanize()}
+            </div>
           </div>
-          <div className="pipeline-duration">{ moment.duration(duration).humanize() }</div>
-        </div>
-        <div className="tile-footer">
-          <div className="pipeline-age">
-            {moment(new Date(pipelineDate)).fromNow()}
+          <div className="tile-footer">
+            <div className="pipeline-age">
+              {moment(new Date(pipelineDate)).fromNow()}
+            </div>
+            <div className="pipeline-id">#{props.project.pipeline?.id}</div>
           </div>
-          <div className="pipeline-id">#{props.project.pipeline?.id}</div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   );
 }

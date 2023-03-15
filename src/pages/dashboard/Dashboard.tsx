@@ -18,7 +18,7 @@ interface IProps {
 interface IState {
   gitLabProjects: Project[];
   loadingAnimation: boolean;
-  page: number;  
+  page: number;
 }
 
 class DashboardPage extends React.Component<IProps, IState> {
@@ -44,6 +44,7 @@ class DashboardPage extends React.Component<IProps, IState> {
     this.handlePageSelected = this.handlePageSelected.bind(this);
     this.renderCiBoard = this.renderCiBoard.bind(this);
     this.renderMrBoard = this.renderMrBoard.bind(this);
+    this.getCiBoardTileCount = this.getCiBoardTileCount.bind(this);
   }
 
   componentDidMount(): void {
@@ -55,13 +56,11 @@ class DashboardPage extends React.Component<IProps, IState> {
             1 +
             Math.floor(
               this.filterGitLabProjectsWithPipelines(this.state.gitLabProjects)
-                .length /
-                (this.props.config?.display?.numberOfPipelines ||
-                  this.defaultTileCount)
+                .length / this.getCiBoardTileCount()
             )),
       });
     };
-    this.pageFlipInterval = setInterval(pageFlipCallback, 60_000);
+    this.pageFlipInterval = setInterval(pageFlipCallback, 6000_000);
 
     const updateCallback = () => {
       const service = new GitLabService();
@@ -90,24 +89,23 @@ class DashboardPage extends React.Component<IProps, IState> {
   }
 
   render() {
-    if(this.state.loadingAnimation) {
+    if (this.state.loadingAnimation) {
       return this.renderLoadingAnimation();
     } else {
       const projects = this.filterGitLabProjectsWithPipelines(
         this.state.gitLabProjects
       );
-  
-      const pageSize =
-        this.props.config?.display?.numberOfPipelines || this.defaultTileCount;
-  
+
+      const pageSize = this.getCiBoardTileCount();
+
       let ciBoardPages = Math.floor(projects.length / pageSize);
       if (0 !== projects.length % pageSize) {
         ciBoardPages++;
       }
-  
+
       const mrBoardPages = 1;
       const pages = ciBoardPages + mrBoardPages;
-  
+
       if (this.state.page < ciBoardPages) {
         return this.renderCiBoard(projects, pageSize, pages);
       } else {
@@ -120,7 +118,7 @@ class DashboardPage extends React.Component<IProps, IState> {
     return (
       <div className="Page Dashboard">
         <PageHeader title="Refreshing data" />
-        <Typewriter text="Preparing dashboard. Please wait..."/>
+        <Typewriter text="Preparing dashboard. Please wait..." />
       </div>
     );
   }
@@ -153,11 +151,9 @@ class DashboardPage extends React.Component<IProps, IState> {
           onElementSelected={this.handlePageSelected}
         />
         <GlCiBoard
+          columns={this.props.config?.display?.ciBoardColumns || 5}
           projects={projectsForPage}
-          tileCount={
-            this.props.config?.display?.numberOfPipelines ||
-            this.defaultTileCount
-          }
+          rows={this.props.config?.display?.ciBoardRows || 3}
         />
       </div>
     );
@@ -181,6 +177,13 @@ class DashboardPage extends React.Component<IProps, IState> {
 
   handlePageSelected(page: number) {
     this.setState({ page: page });
+  }
+
+  private getCiBoardTileCount(): number {
+    return this.props.config?.display
+      ? this.props.config.display.ciBoardColumns *
+          this.props.config.display.ciBoardRows
+      : this.defaultTileCount;
   }
 }
 

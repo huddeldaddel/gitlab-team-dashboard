@@ -1,9 +1,11 @@
 export class DisplayConfig {
     
-    numberOfPipelines: number;    
+    ciBoardColumns: number;
+    ciBoardRows: number;    
     
-    constructor (numberOfPipelines: number) {
-        this.numberOfPipelines = numberOfPipelines;        
+    constructor (ciBoardColumns: number, ciBoardRows: number) {
+        this.ciBoardColumns = ciBoardColumns;        
+        this.ciBoardRows = ciBoardRows;
     }
 
 }
