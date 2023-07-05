@@ -32,7 +32,7 @@ export default function GlMrBoard(props: IProps) {
   function getProjectNameForMergeRequest(mr: MergeRequest): string {
     for (let i = 0; i < props.projects.length; i++) {
       const mrs = props.projects[i].mergeRequests.map((mr) => mr.id);
-      if (mrs.indexOf(mr.id) !== 1) {
+      if (mrs.indexOf(mr.id) !== -1) {
         return props.projects[i].name;
       }
     }
